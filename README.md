@@ -2,6 +2,12 @@
 ```notes```
 Data.cpp program is an engineering example of the original program that I made, you can change the contents of the container and can directly use the program, it's that simple.
 
+is this program based on original data?
+
+well yes but no, why do i say that? because I took the names of students and teachers in my real school, I intentionally left the phone number blank, the rest I made in such a way that it worked.
+
+the program I made is more complex than the one I made on github, I just made an example and didn't use a lot of data here, yes you can say what you see is a piece of my original program and not written in English, I still leave my language in program, you'll find it.
+
 this time I will try to create a program repository for public schools, this program is not difficult to make because I will make it into 1 file.
 
 I copied it from my previous project, so if there are any wrong words or syntax please forgive me, because I am trying to translate what I made in the project, I hope you can understand, if you are confused, of course you can ask something about my project, please leave your comments for this project, I'm very happy if someone else can help me find a solution that can make my project simpler.
