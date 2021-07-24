@@ -22,7 +22,7 @@
 
 > If you see this let me know what should be added.
 
-### The early history of this program :
+### The early history of this program
 * Is this program based on original data ?
 
 well yes but no, why do i say that? because I took the names of students and teachers in my real school, I intentionally left the phone number blank, the rest I made in such a way that it worked.
