@@ -1,6 +1,7 @@
 # mySchool
-
+```notes```
 Data.cpp program is an engineering example of the original program that I made, you can change the contents of the container and can directly use the program, it's that simple.
+
 this time I will try to create a program repository for public schools, this program is not difficult to make because I will make it into 1 file.
 
 I copied it from my previous project, so if there are any wrong words or syntax please forgive me, because I am trying to translate what I made in the project, I hope you can understand, if you are confused, of course you can ask something about my project, please leave your comments for this project, I'm very happy if someone else can help me find a solution that can make my project simpler.
