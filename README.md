@@ -3,12 +3,19 @@
 
 ## How to use ?
 1. Run the program.
-2. Select one of the menus.
-3. If there is a menu again, select the menu, if not there is the result.
+1. Select one of the menus.
+    1. If there is a menu again, select the menu, if not there is the result. 
+    1. if the program asks you to enter input, give your input according to what the program asks for
+1. At the end of the program, the program will ask you to continue the program or not, give an answer that is in accordance with what the program is asking to answer
 
 > Run this program anywhere and edit anywhere for your school / university activities.
 
 ## Future update list
+- [x] Create student classes and their functions
+- [x] Create Teacher classes and their functions
+- [x] Create Lessons classes and their functions
+- [x] Create Homework classes and their functions
+
 - [ ] Simplify program
 - [ ] Tidy up program syntax
 - [ ] Add new function for each menu
