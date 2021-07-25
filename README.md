@@ -1,5 +1,5 @@
 ## mySchool - A program made via a mobile phone and ready to run anywhere
-> ```Data.cpp``` program is an engineering example of the original program that I made, you can change the contents of the container and can directly use the program, it's that simple.
+> ```Data.cpp``` program is an engineering example of the original program that I made, you can change the contents of the container and can directly use the program, it's that simple. Support me to this project too : https://github.com/AltQwerty25/CPP
 
 ## How to use ?
 1. Run the program.
