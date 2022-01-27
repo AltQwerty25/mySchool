@@ -9,14 +9,14 @@
 using namespace std;
 
 // Set local time
-string today = "Selasa";
+string today = "Tuesday";
 string year = "2022";
 string month = "00";
 string date = "00";
 
-void time(string hari = "") {
+void time(string day = "") {
     cout << "*[" << year << "|";
-    cout << month << "|" << date << "] " << hari;
+    cout << month << "|" << date << "] " << day;
 }
 
 string time1 = "* 07:30 - 08:00"; string time2 = "\n* 08:00 - 08:30\n";
@@ -33,8 +33,28 @@ class Student {
 public:
     string name;
     string mobile_phone_number;
-    Student(string name, string noHp);
-    void call_student();
+    Student(string name, string mobile_phone_number) {
+        Student::name = name;
+        Student::mobile_phone_number = mobile_phone_number;
+    }
+    short total_cash;
+    vector <short> cash;
+    void CoC(string name, short total){
+        cout << name + "\nJust donated the money : ";
+        cout << "Rp." << total << ".00\n\n";
+    }
+    void call_student() {
+        cout << ". " << name << "\n" << mobile_phone_number;
+    }
+    short get_sum_kas() {
+        for (int how_many : cash) {
+            total_cash += how_many;
+        }
+        return total_cash;
+    }
+    void add_kas(short input) {
+        cash.push_back(input);
+    }
 };
 
 // Class Teacher
@@ -45,7 +65,7 @@ public:
     string mobile_phone_number;
     Teacher(string study_course, string name, string noHP);
     void call_teacher();
-    void show_maple(string& container);
+    void show_maple(string container);
 };
 
 // Class Lesson
@@ -124,6 +144,7 @@ array <string, 6> teacher_name
 array <string, 6> teacher_noHp
 { F.mobile_phone_number,G.mobile_phone_number,H.mobile_phone_number,I.mobile_phone_number,J.mobile_phone_number,K.mobile_phone_number };
 
+// To call array member
 void call_array(vector <string> name, string mobile_phone_number[]) {
     for (short a = 0; a < 13; a++) {
         if (name[a].empty()) { break; }
@@ -152,7 +173,7 @@ void call_array(vector <string> name) {
 }
 
 // Menu Student
-void student_menu();
+void student_menu(short slc);
 
 // Menu Teacher
 void teacher_menu();
@@ -172,18 +193,23 @@ void call_function_of_homework() {
 // Main
 int main() {
 
-    int choice = getOption();
+    short slc, option, choice = getOption();
 
     char isContinue;
 
     enum option { STUDENT = 1, TEACHER, HOMEWORK, FINISH };
 
     while (choice != FINISH) {
-
         switch (choice) {
         case STUDENT:
-            cout << endl;
-            student_menu();
+            system("cls");
+            cout << "SELECTED : Student";
+            cout << "\n1. Attendance & Absence\n";
+            cout << "2. Information of Student\n";
+            cout << "3. Cash of Class\n";
+            cout << "4. Homework\n";
+            cout << "Choose menu : "; cin >> slc;
+            student_menu(slc);
             break;
         case TEACHER:
             cout << endl;
@@ -200,7 +226,7 @@ int main() {
         label_continue:
         cout << "\nContinue? (Y/N) : "; cin >> isContinue;
         if (isContinue == 'y' or isContinue == 'Y') {
-            // system("cls");
+            system("cls");
             choice = getOption();
         }
         else if (isContinue == 'n' or isContinue == 'N') {
@@ -210,31 +236,67 @@ int main() {
             goto label_continue;
         }
     }
-
     return 0;
     cin.get();
 }
 
-// Student's Prototype
-Student::Student(string name, string mobile_phone_number) {
-    Student::name = name;
-    Student::mobile_phone_number = mobile_phone_number;
-}
-
-// Student's Prototype Call Function
-void Student::call_student() {
-    cout << ". " << name << "\n" << mobile_phone_number;
-}
-
 // Menu Siswa
-void student_menu() {
+void student_menu(short slc) {
     int hadir, tidak_hadir, option, pil;
-    cout << "Please choose one !\n";
-    cout << "1. Student info | 2. Student attendance : ";
-    cin >> option;
+    if(slc == 1){
+        cout << "\nNumber of students in Class : \n";
+        call_array(student_name);
 
-    if (option == 1) {
-        cout << "\nNumber of students in Class : \n\n";
+        short student, present, option;
+        vector <string> exist, not_exist;
+        cout << "How many students are 1.present or 2.absent : "; cin >> option;
+        if(option == 1){
+            // Students present
+            cout << "\nHow many students are Attendance today : "; cin >> present;
+            for (short a = 0; a < present; a++) {
+                cout << a + 1 << ". Choose number : "; cin >> student;
+                exist.push_back(student_name[student]);
+            }
+
+            // Student absent
+            for (short a = 0; a < student_name.size(); a++) {
+                short is_exist = 0;
+                for (short b = 0; b < exist.size(); b++) {
+                    if (student_name[a] == student_name[b]) {
+                        is_exist = 1;
+                    }
+                }
+                if (is_exist == 0) {
+                    not_exist.push_back(student_name[a]);
+                }
+            }
+        }else if(option == 2){
+            cout << "\nHow many students are Absence today : "; cin >> present;
+            for (short a = 0; a < present; a++) {
+                cout << a + 1 << ". Choose number : "; cin >> student;
+                not_exist.push_back(student_name[student]);
+            }
+
+            // Student absent
+            for (short a = 0; a < student_name.size(); a++) {
+                short is_exist = 0;
+                for (short b = 0; b < exist.size(); b++) {
+                    if (student_name[a] == student_name[b]) {
+                        is_exist = 1;
+                    }
+                }
+                if (is_exist == 0) {
+                    exist.push_back(student_name[a]);
+                }
+            }
+        }
+        cout << "\n\n\nToday's student\npresent and absence : "; time();
+        cout << today << "\n\nStudents present : " << exist.size() << endl;
+        call_array(exist, exist.size());
+        cout << "\nStudents absent : " << not_exist.size() << endl;
+        call_array(not_exist, not_exist.size());
+    }else if(slc == 2){
+        cout << "\nNumber of students in Class : \n";
         cout << "NO | NAME\n" << "------------------------------\n";
         for (int index = 0; index < 5; index++) {
             if (student_name[index].empty()) { break; }
@@ -242,40 +304,21 @@ void student_menu() {
             cout << index + 1 << " | " << student_name[index] << endl;
             cout << "HP : +628" << student_noHp[index] << "\n------------------------------\n";
         }
-    }
+    }else if(slc == 3){
+        // [2021-10-11] / Minggu 1 :
+        A.add_kas(5000);
+        B.add_kas(1000);
+        C.add_kas(5000);
+        D.add_kas(5000);
+        E.add_kas(5000);
+        A.CoC(A.name, A.get_sum_kas());
+        B.CoC(B.name, A.get_sum_kas());
+        C.CoC(C.name, A.get_sum_kas());
+        D.CoC(D.name, A.get_sum_kas());
+        E.CoC(E.name, A.get_sum_kas());
 
-    if (option == 2) {
-        cout << "\nNumber of students in Class : \n\n";
-        call_array(student_name);
-
-        short student, present;
-        vector <string> exist, not_exist;
-        cout << "\nHow many students are Attendance today : "; cin >> present;
-        
-        // Students present
-        for (short a = 0; a < present; a++) {
-            cout << a + 1 << ". Choose number : "; cin >> student;
-            exist.push_back(student_name[student]);
-        }
-
-        // Student absent
-        for (short a = 0; a < student_name.size(); a++) {
-            short ketemu = 0;
-            for (short b = 0; b < exist.size(); b++) {
-                if (student_name[a] == student_name[b]) {
-                    ketemu = 1;
-                }
-            }
-            if (ketemu == 0) {
-                not_exist.push_back(student_name[a]);
-            }
-        }
-
-        cout << "\n\n\nToday's student\npresent and absence : "; time();
-        cout << today << "\n\nStudents present : " << exist.size() << endl;
-        call_array(exist, exist.size());
-        cout << "\nStudents absent : " << not_exist.size() << endl;
-        call_array(not_exist, not_exist.size());
+    }else if(slc == 4){
+        cout << "Coming soon" << endl;
     }
 }
 
@@ -306,7 +349,7 @@ void teacher_menu() {
             cout << i + 1 << ". " << study_course[i] << endl;
         }
         cout << "Choose Study Course : "; cin >> pil;
-        cout << "\nStudy Course        | " << study_course[pil - 1] << endl;
+        cout << "\nStudy Course      | " << study_course[pil - 1] << endl;
         cout << "Teacher Name        | " << teacher_name[pil - 1] << endl;
         cout << "Mobile Phone Number | +628" << teacher_noHp[pil - 1] << endl;
     }
@@ -320,7 +363,7 @@ void Teacher::call_teacher() {
 }
 
 // Teacher's Prototype Call Function
-void Teacher::show_maple(string& container) {
+void Teacher::show_maple(string container) {
     cout << study_course << "\n" << container;
 }
 
@@ -328,40 +371,40 @@ void Teacher::show_maple(string& container) {
 Lesson::Lesson(string days) {
     Lesson::days = days;
     cout << "Today "; time();
-    cout << Lesson::days << endl;
+    cout << Lesson::days << "*\n";
     cout << "Lesson : \n";
     if (days == "Monday" or days == "monday") {
-        K.show_maple(time1); // 07:30-07:55|MTK|07:55-08:20
-        H.show_maple(time2); // 08:20-08:45|PKK|08:45-09:10 
-        J.show_maple(time3); // 09:10-09:35|ASJ|09:35-10:00 
-        H.show_maple(time4); // 10:00-10:25|PKK|10:25-10:50 
+        K.show_maple(time1 + time2); // 07:30-07:55|MTK|07:55-08:20
+        H.show_maple(time3 + time4); // 08:20-08:45|PKK|08:45-09:10 
+        J.show_maple(time5 + time6); // 09:10-09:35|ASJ|09:35-10:00 
+        H.show_maple(time7 + time8); // 10:00-10:25|PKK|10:25-10:50 
     }
     else if (days == "Tuesday" or days == "tuesday") {
-        F.show_maple(time1); // 07:30-07:55|IDN|07:55-08:20  
-        H.show_maple(time2); // 08:20-08:45|PKK|08:45-09:10 
-        J.show_maple(time3); // 09:10-09:35|ASJ|09:35-10:00
-        I.show_maple(time4); // 10:00-10:25|TLJ|10:25-10:50
+        F.show_maple(time1 + time2); // 07:30-07:55|IDN|07:55-08:20  
+        H.show_maple(time3 + time4); // 08:20-08:45|PKK|08:45-09:10 
+        J.show_maple(time5 + time6); // 09:10-09:35|ASJ|09:35-10:00
+        I.show_maple(time7 + time8); // 10:00-10:25|TLJ|10:25-10:50
     }
     else if (days == "Wednesday" or days == "wednesday") {
-        J.show_maple(time1); // 07:30-07:55|ASJ|07:55-08:20
-        K.show_maple(time2); // 08:20-08:45|MTK|08:45-09:10
-        G.show_maple(time3); // 09:10-09:35|ING|09:35-10:00
-        I.show_maple(time4); // 10:00-10:25|TLJ|10:25-10:50
+        J.show_maple(time1 + time2); // 07:30-07:55|ASJ|07:55-08:20
+        K.show_maple(time3 + time4); // 08:20-08:45|MTK|08:45-09:10
+        G.show_maple(time5 + time6); // 09:10-09:35|ING|09:35-10:00
+        I.show_maple(time7 + time8); // 10:00-10:25|TLJ|10:25-10:50
     }
     else if (days == "Thursday" or days == "thursday") {
-        K.show_maple(time1); // 07:30-07:55|MTK|07:55-08:20
-        I.show_maple(time2); // 08:20-08:45|TLJ|08:45-09:10
-        J.show_maple(time3); // 09:10-09:35|ASJ|09:35-10:00 
-        I.show_maple(time4); // 10:00-10:25|TLJ|10:25-10:50
+        K.show_maple(time1 + time2); // 07:30-07:55|MTK|07:55-08:20
+        I.show_maple(time3 + time4); // 08:20-08:45|TLJ|08:45-09:10
+        J.show_maple(time5 + time6); // 09:10-09:35|ASJ|09:35-10:00 
+        I.show_maple(time7 + time8); // 10:00-10:25|TLJ|10:25-10:50
     }
     else if (days == "Friday" or days == "friday") {
-        K.show_maple(time1); // 07:30-07:55|MTK|07:55-08:20
-        I.show_maple(time2); // 08:20-08:45|TLJ|08:45-09:10
-        H.show_maple(time3); // 09:10-09:35|PKK|09:35-10:00
+        K.show_maple(time1 + time2); // 07:30-07:55|MTK|07:55-08:20
+        I.show_maple(time3 + time4); // 08:20-08:45|TLJ|08:45-09:10
+        H.show_maple(time5); // 09:10-09:35|PKK|09:35-10:00
     }
     else if (days == "Saturday" or days == "saturday") {
-        G.show_maple(time1); // 07:30-07:55|ING|07:55-08:20
-        F.show_maple(time2); // 08:20-08:45|IDN|08:45-09:10
+        G.show_maple(time1 + time2); // 07:30-07:55|ING|07:55-08:20
+        F.show_maple(time3 + time4); // 08:20-08:45|IDN|08:45-09:10
     }
     else {
         try {
