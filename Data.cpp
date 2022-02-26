@@ -25,8 +25,6 @@ string time3 = "• 08:30 - 09:00"; string time4 = "\n• 09:00 - 09:30\n";
 string time5 = "• 10:00 - 10:30"; string time6 = "\n• 10:30 - 11:00\n";
 string time7 = "• 11:00 - 11:30"; string time8 = "\n• 11:30 - 12:00\n";
 
-// Compiler version g++ 6.3.0
-
 // Class Student
 class Student {
 public:
@@ -73,19 +71,23 @@ public:
     string name;
     string study_course;
     string mobile_phone_number;
+
     Teacher(string study_course, string name, string mobile_phone_number) {
         Teacher::study_course = study_course;
         Teacher::name = name;
         Teacher::mobile_phone_number = mobile_phone_number;
     }
+
     void call_teacher() {
         cout << "Nama Mapel : " << study_course << endl;
         cout << "Nama Teacher  : " << name << endl;
         cout << "No Hp : " << "+62" << mobile_phone_number << endl;
     }
+
     void show_maple(string container) {
         cout << study_course << "\n" << container;
     }
+
 };
 
 // Class Lesson
@@ -101,12 +103,14 @@ public:
     string number;
     string date;
     string study_course;
+
     Homework(string number, string date, string study_course) {
         Homework::number = number;
         Homework::study_course = study_course;
         Homework::date = date;
         cout << number << ". [" << date << "] " << study_course << "\n";
     }
+
 };
 
 // container Student
@@ -200,27 +204,34 @@ public:
     ifstream in;
     ofstream out;
     string filename;
+
     DBase(const char* fileName, bool boolean = false) {
+
         if (boolean == false) {
             DBase::filename = fileName;
             DBase::in.open(DBase::filename, ios::trunc | ios::out);
         }
+
         else if (boolean == true) {
             DBase::filename = fileName;
         }
+
     }
+
     void save(Student data, short index){
         DBase::out.open(DBase::filename, ios::app);
         if (index <= 9) { DBase::out << "0"; }
         DBase::out << index << ". " << data.stringify();
         DBase::out.close();
     }
+
     template<typename T>
     void save_text(T data){
         DBase::out.open(DBase::filename, ios::app);
         DBase::out << data;
         DBase::out.close();
     }
+    
 };
 
 // Menu Student
@@ -252,8 +263,9 @@ int main(int argc, const char* argv[]) {
 
     while (choice != FINISH) {
         switch (choice) {
+
         case STUDENT:
-            system("cls");
+            //system("cls");
             cout << "SELECTED : Student\n";
             cout << "1. Attendance & Absence\n";
             cout << "2. Information of Student\n";
@@ -262,35 +274,52 @@ int main(int argc, const char* argv[]) {
             cout << "Choose menu : "; cin >> slc;
             student_menu(slc);
             break;
+
         case TEACHER:
-            system("cls");
+            //system("cls");
             cout << "SELECTED : Teacher\n";
-            cout << "Information of Teacher\n";
-            cout << "Timetable\n"; 
+            cout << "1. Information of Teacher\n";
+            cout << "2. Timetable\n"; 
             cout << "Choose menu : "; cin >> slc;
             teacher_menu(slc);
             break;
+
         case HOMEWORK:
             cout << endl;
             call_function_of_homework();
             break;
+
+        case FINISH:
+        cout << "System is Finnish - sOpen again to start";
+        break;
+
         default:
-            cout << "Options Could not be found\t";
+            cout << "Options Could not be found - Auto Start\t";
             break;
         }
+
         label_continue:
-        cout << "\nContinue? (Y/N) : "; cin >> isContinue;
+        if(!choice == 1 or !choice == 2){
+            cout << "Invalid input !\n";
+        } 
+        cout << "Continue (Y/N) ? : "; cin >> isContinue;
+
         if (isContinue == 'y' or isContinue == 'Y') {
-            // system("cls");
+            //system("cls");
             choice = getOption();
         }
+
         else if (isContinue == 'n' or isContinue == 'N') {
+            cout << "System is Finnish - Open again to start";
             break;
         }
+
         else {
             goto label_continue;
         }
+
     }
+
     return 0;
     cin.get();
 }
@@ -298,7 +327,8 @@ int main(int argc, const char* argv[]) {
 // Menu Siswa
 void student_menu(short slc) {
     int hadir, tidak_hadir, option, pil;
-    DBase siswa = DBase("Siswa.txt");
+    //DBase siswa = DBase("Siswa.txt");
+
     if(slc == 1){
         cout << "\nNumber of students in Class : \n";
         call_array(student_name);
@@ -316,11 +346,13 @@ void student_menu(short slc) {
             for (short a = 0; a < present; a++) {
                 cout << a + 1 << ". Choose number : "; cin >> student;
                 exist.push_back(student_name[student - 1]);
-                Student data_siswa = Student(student_name[a], student_noHp[a] + "\n");
-                siswa.save(data_siswa, a + 1);
+                //Student data_siswa = Student(student_name[a], student_noHp[a] + "\n");
+                //siswa.save(data_siswa, a + 1);
             }
+
             // Student absent
             siswa.save_text("\nStudents who are not present : \n");
+
             for (short a = 0; a < student_name.size(); a++) {
                 short is_exist = 0;
                 for (short b = 0; b < exist.size(); b++) {
@@ -328,20 +360,22 @@ void student_menu(short slc) {
                         is_exist = 1;
                     }
                 }
+
                 if (is_exist == 0) {
                     not_exist.push_back(student_name[a]);
-                    Student data_siswa = Student(student_name[a], student_noHp[a] + "\n");
-                    siswa.save(data_siswa, ((a + 1) - present));
+                    //Student data_siswa = Student(student_name[a], student_noHp[a] + "\n");
+                    //siswa.save(data_siswa, ((a + 1) - present));
                 }
             }
+
         }else if(option == 2){
             cout << "\nHow many students are Absence today : "; cin >> present;
             siswa.save_text("\nStudents who are not present : \n");
             for (short a = 0; a < present; a++) {
                 cout << a + 1 << ". Choose number : "; cin >> student;
                 not_exist.push_back(student_name[student - 1]);
-                Student data_siswa = Student(student_name[a], student_noHp[a] + "\n");
-                siswa.save(data_siswa, a + 1);
+                //Student data_siswa = Student(student_name[a], student_noHp[a] + "\n");
+                //siswa.save(data_siswa, a + 1);
             }
 
             // Student absent
@@ -353,22 +387,26 @@ void student_menu(short slc) {
                         is_exist = 1;
                     }
                 }
+
                 if (is_exist == 0) {
                     exist.push_back(student_name[a]);
-                    Student data_siswa = Student(student_name[a], student_noHp[a] + "\n");
-                    siswa.save(data_siswa, ((a + 1) - present));
+                    //Student data_siswa = Student(student_name[a], student_noHp[a] + "\n");
+                    //siswa.save(data_siswa, ((a + 1) - present));
                 }
             }
         }
+
         cout << "\n\n\nToday's student\npresent and absence : "; time();
         cout << today << "\n\nStudents present : " << exist.size() << endl;
         call_array(exist, exist.size());
         cout << "\nStudents absent : " << not_exist.size() << endl;
         call_array(not_exist, not_exist.size());
     }
+
     else if(slc == 2){
         cout << "\nNumber of students in Class : \n";
         cout << "NO | NAME\n" << "------------------------------\n";
+
         for (int index = 0; index < 5; index++) {
             if (student_name[index].empty()) { break; }
             if (index < 5) { cout << "0"; }
@@ -396,10 +434,12 @@ void student_menu(short slc) {
 // Menu Guru
 void teacher_menu(short slc) {
     int option, pil;
+
     if(slc == 1){
         cout << "1. Teacher (all) | 2. Teacher (selected) : ";
         cin >> option;
         cout << "\nNew Academic Year 2021/2022\nXII Computer network Engineering\n\n";
+        
         if (option == 1) {
             for (short i = 0; i < teacher_name.size(); i++) {
                 cout << "Study Course        | " << study_course[i] << endl;
@@ -407,19 +447,23 @@ void teacher_menu(short slc) {
                 cout << "Mobile Phone Number | +628" << teacher_noHp[i] << endl << endl;
             }
         }
+
         if (option == 2) {
             for (short i = 0; i < teacher_name.size(); i++) {
                 if (i < 9) { cout << "0"; }
                 cout << i + 1 << ". " << study_course[i] << endl;
             }
+
             cout << "Choose Study Course : "; cin >> pil;
             cout << "\nStudy Course      | " << study_course[pil - 1] << endl;
             cout << "Teacher Name        | " << teacher_name[pil - 1] << endl;
             cout << "Mobile Phone Number | +628" << teacher_noHp[pil - 1] << endl;
         }
+
     }else if(slc == 2){
         cout << "1. Timetable now | 2. All Timetable : ";
         cin >> option;
+
         if(option == 1){
             Lesson now(today);
         }else if(option == 2){
@@ -437,11 +481,14 @@ void teacher_menu(short slc) {
 // Lesson's Prototype
 Lesson::Lesson(string days) {
     Lesson::days = days;
+
     cout << "Today "; time();
     cout << Lesson::days << "*\n";
     cout << "The Lesson is : \n";
+
     if (days == "Monday" or days == "monday") { cout << "Upacara" << endl; }
     else { cout << "Sholat Dhuha" << endl; }
+
     if (days == "Monday" or days == "monday") {
         K.show_maple(time1 + time2); // 07:30-07:55|MTK|07:55-08:20
         H.show_maple(time3 + time4); // 08:20-08:45|PKK|08:45-09:10 
@@ -489,7 +536,7 @@ Lesson::Lesson(string days) {
 int getOption() {
     int pil;
     cout << "Welcome Developer\n";
-    cout << "1. Student | 2. Teacher | 3.Timetable\n";
+    cout << "1. Student | 2. Teacher \n";
     cout << "Please select menu : "; cin >> pil;
     return pil;
 }
