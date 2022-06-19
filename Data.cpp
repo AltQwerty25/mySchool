@@ -250,6 +250,7 @@ void call_function_of_homework() {
     cout << "---------------------------------\n";
     Homework ke1("01", "2021 JULY 23", "PKK");
     Homework ke2("02", "2021 JULY 24", "ING");
+    // you can add another homework like above
 }
 
 // Main
@@ -266,7 +267,7 @@ int main(int argc, const char* argv[]) {
 
         case STUDENT:
             //system("cls");
-            cout << "SELECTED : Student\n";
+            cout << "\nSELECTED : Student\n";
             cout << "1. Attendance & Absence\n";
             cout << "2. Information of Student\n";
             cout << "3. Cash of Class\n";
@@ -277,7 +278,7 @@ int main(int argc, const char* argv[]) {
 
         case TEACHER:
             //system("cls");
-            cout << "SELECTED : Teacher\n";
+            cout << "\nSELECTED : Teacher\n";
             cout << "1. Information of Teacher\n";
             cout << "2. Timetable\n"; 
             cout << "Choose menu : "; cin >> slc;
@@ -336,13 +337,13 @@ void student_menu(short slc) {
         short student, present, option;
         vector <string> exist, not_exist;
 
-        siswa.save_text("At this moment *[" + year + "|" + month + "|" + date + "]* " + today + "\n");
-        cout << "How many students are : 1.present or 2.absent : "; cin >> option;
+        //siswa.save_text("At this moment *[" + year + "|" + month + "|" + date + "]* " + today + "\n");
+        cout << "Students are : 1.present or 2.absent : "; cin >> option;
 
         if(option == 1){
             // Students present
             cout << "\nHow many students are Attendance today : "; cin >> present;
-            siswa.save_text("\nStudents present : \n");
+            //siswa.save_text("\nStudents present : \n");
             for (short a = 0; a < present; a++) {
                 cout << a + 1 << ". Choose number : "; cin >> student;
                 exist.push_back(student_name[student - 1]);
@@ -351,7 +352,7 @@ void student_menu(short slc) {
             }
 
             // Student absent
-            siswa.save_text("\nStudents who are not present : \n");
+            //siswa.save_text("\nStudents who are not present : \n");
 
             for (short a = 0; a < student_name.size(); a++) {
                 short is_exist = 0;
@@ -370,7 +371,7 @@ void student_menu(short slc) {
 
         }else if(option == 2){
             cout << "\nHow many students are Absence today : "; cin >> present;
-            siswa.save_text("\nStudents who are not present : \n");
+            //siswa.save_text("\nStudents who are not present : \n");
             for (short a = 0; a < present; a++) {
                 cout << a + 1 << ". Choose number : "; cin >> student;
                 not_exist.push_back(student_name[student - 1]);
@@ -379,7 +380,7 @@ void student_menu(short slc) {
             }
 
             // Student absent
-            siswa.save_text("\nStudents present : \n");
+            //siswa.save_text("\nStudents present : \n");
             for (short a = 0; a < student_name.size(); a++) {
                 short is_exist = 0;
                 for (short b = 0; b < not_exist.size(); b++) {
@@ -482,7 +483,7 @@ void teacher_menu(short slc) {
 Lesson::Lesson(string days) {
     Lesson::days = days;
 
-    cout << "Today "; time();
+    cout << "\nToday "; time();
     cout << Lesson::days << "*\n";
     cout << "The Lesson is : \n";
 
